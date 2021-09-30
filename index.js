@@ -18,7 +18,6 @@ server.get('/api/users', async (req, res) => {
     }
 })
 
-
 server.post('/api/register', async (req, res) => {
     try {
         const { username, password } = req.body
@@ -38,9 +37,12 @@ server.post('/api/register', async (req, res) => {
 })
 
 
+server.get('/', (req, res) => {
+    res.send('<h1>Test api</h1>')
+})
+
+
 const port = process.env.PORT || 3000 
-
-
 
 server.listen(port, () => {
     console.log(`listening on ${port}`)
