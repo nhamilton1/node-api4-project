@@ -21,7 +21,16 @@ const insert = ({ username, password }) => {
   return Promise.resolve(newUser)
 }
 
+const findUser = ({ username, password }) => {
+  const user = { username, password }
+  if( user.username === users.username && users.password === password) {
+    return Promise.resolve(user.username)
+  }
+  return null
+}
+
 module.exports = {
   find,
   insert,
+  findUser,
 }

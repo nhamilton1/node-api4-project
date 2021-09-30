@@ -36,6 +36,24 @@ server.post('/api/register', async (req, res) => {
     }
 })
 
+server.post('/api/login', async (req, res) => {
+    try {
+        const { username, password } = req.body
+        if(!username || !password) {
+            res.status(400).json({
+                message: "Please provide username and password"
+            })
+        } else {
+            const user = await Users.findUser({ username, password })
+            res.status(201).json(`Welcome ${user}!`)
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: "There was an error while checking for the user"
+            })
+    }
+})
+
 
 server.get('/', (req, res) => {
     res.send('<h1>Test api</h1>')
