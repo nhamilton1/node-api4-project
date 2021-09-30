@@ -39,14 +39,16 @@ server.post('/api/register', async (req, res) => {
 server.post('/api/login', async (req, res) => {
     try {
         const { username, password } = req.body
-        if(!username || !password) {
-            res.status(400).json({
-                message: "Please provide username and password"
-            })
-        } else {
-            const user = await Users.findUser({ username, password })
-            res.status(201).json(`Welcome ${user}!`)
-        }
+        const matchedUser = await Users.findUser({ username, password })
+            if(!matchedUser) {
+                res.status(400).json({
+                    message: 'user not found'
+                })
+            } else {
+                res.status(200).json({
+                    message: `Welcome ${matchedUser}`
+                })
+            }
     } catch (err) {
         res.status(500).json({
             message: "There was an error while checking for the user"
@@ -65,3 +67,16 @@ const port = process.env.PORT || 3000
 server.listen(port, () => {
     console.log(`listening on ${port}`)
 })
+
+
+
+
+
+// if(!username || !password) {
+//     res.status(400).json({
+//         message: "Please provide username and password"
+//     })
+// } else {
+//     const user = await Users.findUser({ username, password })
+//     res.status(201).json(`Welcome ${user}!`)
+// }

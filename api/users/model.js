@@ -23,10 +23,9 @@ const insert = ({ username, password }) => {
 
 const findUser = ({ username, password }) => {
   const user = { username, password }
-  if( user.username === users.username && users.password === password) {
+  if ( users.some(validUser => validUser.username === user.username) && users.some(validPassword => validPassword.password === user.password) ) {
     return Promise.resolve(user.username)
   }
-  return null
 }
 
 module.exports = {
