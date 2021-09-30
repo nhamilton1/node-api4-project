@@ -1,10 +1,8 @@
-require('dotenv').config()
-const cors = require('cors')
 const express = require('express')
+const Users = require('./users/model')
 const server = express()
-const Users = require('./api/users/model')
-server.use(cors())
 server.use(express.json())
+
 
 
 server.get('/api/users', async (req, res) => {
@@ -21,13 +19,13 @@ server.get('/api/users', async (req, res) => {
 
 server.post('/api/register', async (req, res) => {
     try {
-        const { username, password } = req.body
-        if(!username || !password) {
+        const { name, bio } = req.body
+        if(!name || !bio) {
             res.status(400).json({
-                message: "Please provide username and password"
+                message: "Please provide name and bio for the user"
             })
         } else {
-            const newUser = await Users.insert({ username, password })
+            const newUser = await Users.insert({ name, bio })
             res.status(201).json(newUser)
         }
     } catch (err) {
@@ -37,11 +35,3 @@ server.post('/api/register', async (req, res) => {
     }
 })
 
-
-const port = process.env.PORT || 3000 
-
-
-
-server.listen(port, () => {
-    console.log(`listening on ${port}`)
-})
